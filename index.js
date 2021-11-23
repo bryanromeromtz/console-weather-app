@@ -1,24 +1,33 @@
-const { 
-  readInput, 
-  inquirerMenu, 
-  inquirerPause 
-  } = require('./helpers/inquirer');
+const {
+  readInput,
+  inquirerMenu,
+  inquirerPause
+} = require('./helpers/inquirer');
+
+const Search = require('./models/search');
 
 const main = async () => {
+
+  const searches = new Search();
   let opt;
   do {
     opt = await inquirerMenu();
-    console.log({opt});
-    // switch (opt) {
-    //   case value:
-        
-    //     break;
-    
-    //   default:
-    //     break;
-    // }
-    if(opt !== 0 ) {
-     await inquirerPause();
+    switch (opt) {
+      case 1:
+        const place = await readInput('City: ');
+        console.log(place);
+
+        console.log('\nInformacion de la ciudad\n'.green);
+        break;
+      case 2:
+
+        break;
+      case 3:
+
+        break;
+    }
+    if (opt !== 0) {
+      await inquirerPause();
     }
   } while (opt !== 0);
 }
