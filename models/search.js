@@ -1,5 +1,6 @@
 const axios = require('axios');
 
+const MAPBOX_KEY = process.env.MAPBOX_KEY
 class Search {
   history = [];
   constructor() {
@@ -10,7 +11,7 @@ class Search {
     return {
       'limit': 5,
       'language': 'es',
-      'access_token': 'pk.eyJ1IjoiYnJ5YW4tYWt1c2VyIiwiYSI6ImNrd2QyNmlyeTh2b3MydW10N2F2YTRrNW0ifQ.JcGG4lWCizcpdDjjFp2rEA',
+      'access_token': MAPBOX_KEY,
     }
   }
 
