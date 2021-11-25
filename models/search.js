@@ -22,8 +22,12 @@ class Search {
         params: this.paramsMapbox
       })
       const res = await instance.get();
-      console.log(res.data);
-      return []
+      return res.data.features.map(place => ({
+        id: place.id,
+        name: place.place_name,
+        lng: place.center[0],
+        lat: place.center[1],
+      }))
     } catch (error) {
       return []
     }

@@ -67,28 +67,28 @@ const readInput = async (message) => {
   return desc;
 }
 
-const listTasksToDelete = async (tasks = []) => {
-  const choices = tasks.map((task, i) => {
+const listPlaces = async (places = []) => {
+  const choices = places.map((place, i) => {
     const idx = `${i + 1}`.green;
-    const { _id, desc } = task
+    const { id, name } = place
     return {
-      value: _id,
-      name: `${idx} ${desc}`
+      value: id,
+      name: `${idx} ${name}`
     }
   });
   choices.unshift({
     value: '0',
     name: '0.'.green + 'Cancel'
   })
-  const questionsDeleteTask = [
+  const questions = [
     {
       type: 'list',
       name: 'id',
-      message: 'Delete Task',
+      message: 'Select Place',
       choices,
     }
   ]
-  const { id } = await inquirer.prompt(questionsDeleteTask);
+  const { id } = await inquirer.prompt(questions);
   return id;
 }
 
@@ -112,8 +112,8 @@ const confirm = async (message) => {
   return ok;
 }
 
-const showChecklist = async (tasks = []) => {
-  const choices = tasks.map((task, i) => {
+const showChecklist = async (places = []) => {
+  const choices = places.map((task, i) => {
     const idx = `${i + 1}`.green;
     const { _id, desc } = task
     return {
@@ -141,7 +141,7 @@ module.exports = {
   inquirerMenu,
   inquirerPause,
   readInput,
-  listTasksToDelete,
+  listPlaces,
   confirm,
   showChecklist
 }
