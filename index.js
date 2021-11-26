@@ -1,5 +1,5 @@
 require('dotenv').config();
-const colors = require('colors');
+
 const {
   readInput,
   inquirerMenu,
@@ -25,16 +25,18 @@ const main = async () => {
         const selectId = await listPlaces(places);
         const selectedPlace = places.find(place => place.id === selectId);
         // CLIMATE
-
-        // SHOW RESULTS
-        console.log('\nInformacion de la ciudad\n'.green);
         const { name, lng, lat } = selectedPlace;
+        const climate = await searches.climatePlace(lat, lng);
+        // SHOW RESULTS
+        console.clear()
+        console.log('\nCity Information\n'.green);
         console.log('City:'.magenta, name.blue);
+        console.log('Weather Description:'.magenta, `${climate.desc}`.blue);
         console.log('Lat:'.magenta, `${lat}`.blue);
         console.log('Lng:'.magenta, `${lng}`.blue);
-        console.log('Temperature:');
-        console.log('Minimum:');
-        console.log('Maximum:');
+        console.log('Temperature:'.magenta, `${climate.temp}`.blue);
+        console.log('Temp Min:'.magenta, `${climate.min}`.blue);
+        console.log('Temp Max:'.magenta, `${climate.max}`.blue);
 
         break;
       case 2:
