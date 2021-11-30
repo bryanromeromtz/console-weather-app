@@ -4,10 +4,11 @@ const MAPBOX_KEY = process.env.MAPBOX_KEY
 const OPENWEATHERMAP_KEY = process.env.OPENWEATHERMAP_KEY
 class Search {
   history = [];
-  constructor() {
 
+  constructor() {
   }
-  //lat={lat}&lon={lon}&appid={API key}
+
+
   get paramsMapbox() {
     return {
       'limit': 5,
@@ -15,6 +16,8 @@ class Search {
       'access_token': MAPBOX_KEY,
     }
   }
+
+
 
   get paramsOpenweathermap() {
     return {
@@ -56,9 +59,14 @@ class Search {
         min: main.temp_min,
         max: main.temp_max
       }
+
     } catch (error) {
       log.error(error);
     }
+  }
+
+  async addHistory(place = "") {
+    this.history.unshift(place)
   }
 }
 

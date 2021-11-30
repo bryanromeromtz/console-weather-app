@@ -22,14 +22,21 @@ const main = async () => {
         // LOOK FOR THE PLACE 
         const places = await searches.city(searchTerm);
         // SELECT THE PLACE
-        const selectId = await listPlaces(places);
-        const selectedPlace = places.find(place => place.id === selectId);
+        const selectID = await listPlaces(places);
+        if (selectID === '0') {
+          continue
+        }
+        const selectedPlace = places.find(place => place.id === selectID);
+
+        // ADD  IN DB
+        searches.addHistory(selectedPlace.name);
+
         // CLIMATE
-        const { name, lng, lat } = selectedPlace;
-        const climate = await searches.climatePlace(lat, lng);
+        const climate = await searches.climatePlace(selectedPlace.lat, selectedPlace.lng);
         // SHOW RESULTS
         console.clear()
         console.log('\nCity Information\n'.green);
+        const { name, lng, lat } = selectedPlace;
         console.log('City:'.magenta, name.blue);
         console.log('Weather Description:'.magenta, `${climate.desc}`.blue);
         console.log('Lat:'.magenta, `${lat}`.blue);
@@ -40,11 +47,11 @@ const main = async () => {
 
         break;
       case 2:
-
+        searches.history.forEach((place, idx) => {
+          console.log(`${idx + 1}: ${place}`)
+        })
         break;
-      case 3:
 
-        break;
     }
     if (opt !== 0) {
       await inquirerPause();
