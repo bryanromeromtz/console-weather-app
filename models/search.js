@@ -1,9 +1,12 @@
+const fs = require('fs')
+
 const axios = require('axios');
 
 const MAPBOX_KEY = process.env.MAPBOX_KEY
 const OPENWEATHERMAP_KEY = process.env.OPENWEATHERMAP_KEY
 class Search {
   history = [];
+  dbPath = './DB/database.json';
 
   constructor() {
   }
@@ -66,7 +69,23 @@ class Search {
   }
 
   async addHistory(place = "") {
+    if (this.history.includes(place)) {
+      return
+    }
     this.history.unshift(place)
+
+    this.saveDB()
+  }
+
+  saveDB() {
+    const payload = {
+      history: this.history
+    }
+    fs.writeFileSync(this.dbPath, JSON.stringify(payload))
+  }
+
+  readDB() {
+
   }
 }
 

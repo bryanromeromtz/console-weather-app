@@ -47,8 +47,9 @@ const main = async () => {
 
         break;
       case 2:
-        searches.history.forEach((place, idx) => {
-          console.log(`${idx + 1}: ${place}`)
+        searches.history.forEach((place, i) => {
+          const idx = `${i + 1}`.green;
+          console.log(`${idx}: ${place}`)
         })
         break;
 
