@@ -9,6 +9,17 @@ class Search {
   dbPath = './DB/database.json';
 
   constructor() {
+    this.readDB();
+  }
+
+  get capitalizedHistory() {
+    return this.history.map(place => {
+      //return place.charAt(0).toUpperCase() + place.slice(1);
+      let words = place.split(' ');
+      words.map(word => word[0].toUpperCase() + word.substring(1))
+
+      return words.join(' ')
+    })
   }
 
 
@@ -20,8 +31,6 @@ class Search {
     }
   }
 
-
-
   get paramsOpenweathermap() {
     return {
       appid: OPENWEATHERMAP_KEY,
@@ -29,6 +38,8 @@ class Search {
       lang: 'en'
     }
   }
+
+  
 
   async city(place = '') {
     try {
@@ -69,10 +80,10 @@ class Search {
   }
 
   async addHistory(place = "") {
-    if (this.history.includes(place)) {
+    if (this.history.includes(place.toLocaleLowerCase)) {
       return
     }
-    this.history.unshift(place)
+    this.history.unshift(place.toLocaleLowerCase)
 
     this.saveDB()
   }
@@ -85,7 +96,10 @@ class Search {
   }
 
   readDB() {
-
+    if (!fs.existsSync(this.dbPath)) return
+    const info = fs.readFileSync(this.dbPath, { encoding: 'utf-8' });
+    const data = JSON.parse(info);
+    this.history = data.history;
   }
 }
 

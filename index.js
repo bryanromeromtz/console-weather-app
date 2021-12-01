@@ -47,13 +47,14 @@ const main = async () => {
 
         break;
       case 2:
-        searches.history.forEach((place, i) => {
+        searches.capitalizedHistory.forEach((place, i) => {
           const idx = `${i + 1}`.green;
           console.log(`${idx}: ${place}`)
         })
         break;
 
     }
+
     if (opt !== 0) {
       await inquirerPause();
     }
