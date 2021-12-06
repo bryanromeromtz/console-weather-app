@@ -4,7 +4,10 @@ const axios = require('axios');
 
 const MAPBOX_KEY = process.env.MAPBOX_KEY
 const OPENWEATHERMAP_KEY = process.env.OPENWEATHERMAP_KEY
+
+
 class Search {
+
   history = [];
   dbPath = './DB/database.json';
 
@@ -14,9 +17,9 @@ class Search {
 
   get capitalizedHistory() {
     return this.history.map(place => {
-      //return place.charAt(0).toUpperCase() + place.slice(1);
+      // return place.charAt(0).toUpperCase() + place.slice(1);
       let words = place.split(' ');
-      words.map(word => word[0].toUpperCase() + word.substring(1))
+      words = words.map(word => word[0].toUpperCase() + word.substring(1))
 
       return words.join(' ')
     })
@@ -39,7 +42,7 @@ class Search {
     }
   }
 
-  
+
 
   async city(place = '') {
     try {
@@ -79,11 +82,13 @@ class Search {
     }
   }
 
-  async addHistory(place = "") {
-    if (this.history.includes(place.toLocaleLowerCase)) {
+  addHistory(place = "") {
+    if (this.history.includes(place.toLocaleLowerCase())) {
       return
     }
-    this.history.unshift(place.toLocaleLowerCase)
+    this.history = this.history.splice(0, 5);
+
+    this.history.unshift(place.toLocaleLowerCase())
 
     this.saveDB()
   }
